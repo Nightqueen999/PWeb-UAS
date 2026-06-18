@@ -1,4 +1,4 @@
 /public/AdminLTE/*
 /vendor
-
+/amateri
 !/public/AdminLTE/Put AdminLTE here (plugins, pages, dist, ect.).txt
