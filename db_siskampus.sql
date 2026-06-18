@@ -149,6 +149,20 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`) VALUES
 (22, 'a', 'a@a.a', '$2y$10$7uGjgXeziXOfVxUXChRzxuWMCzhV6MBRZtic89HtxHruxFn60Ze6m', NULL);
 
 --
+-- Table structure for table `transaksis`
+--
+
+CREATE TABLE `transaksis` (
+  `id` int(11) NOT NULL,
+  `id_mahasiswa` int(11) NOT NULL,
+  `kategori` enum('Biaya UKT','Biaya Wisuda','Biaya PKKMB','Biaya Seragam','Biaya Seminar','Biaya Lainnya') NOT NULL,
+  `nominal` int(11) NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Indexes for dumped tables
 --
 
@@ -187,6 +201,13 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `transaksis`
+--
+ALTER TABLE `transaksis`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_mahasiswa` (`id_mahasiswa`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -221,6 +242,12 @@ ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
+-- AUTO_INCREMENT for table `transaksis`
+--
+ALTER TABLE `transaksis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -236,6 +263,12 @@ ALTER TABLE `jurusans_mata_kuliahs`
 --
 ALTER TABLE `mahasiswas`
   ADD CONSTRAINT `mahasiswas_ibfk_1` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusans` (`id`);
+
+--
+-- Constraints for table `transaksis`
+--
+ALTER TABLE `transaksis`
+  ADD CONSTRAINT `transaksis_ibfk_1` FOREIGN KEY (`id_mahasiswa`) REFERENCES `mahasiswas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

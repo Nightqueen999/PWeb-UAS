@@ -11,6 +11,7 @@ use Krispachi\KrisnaLTE\Middleware\GuestMiddleware;
 use Krispachi\KrisnaLTE\Controller\SubjectController;
 use Krispachi\KrisnaLTE\Controller\MahasiswaController;
 use Krispachi\KrisnaLTE\Controller\MajorController;
+use Krispachi\KrisnaLTE\Controller\TransactionController;
 use Krispachi\KrisnaLTE\Middleware\AdminMiddleware;
 use Krispachi\KrisnaLTE\Middleware\PetugasPendaftaranMiddleware;
 
@@ -43,5 +44,11 @@ Router::add("POST", "/majors", MajorController::class, "store", [AuthMiddleware:
 Router::add("GET", "/majors/([0-9a-zA-Z]*)", MajorController::class, "major", [AuthMiddleware::class, AdminMiddleware::class]);
 Router::add("POST", "/majors/delete/([0-9a-zA-Z]*)", MajorController::class, "delete", [AuthMiddleware::class, AdminMiddleware::class]);
 Router::add("POST", "/majors/([0-9a-zA-Z]*)", MajorController::class, "edit", [AuthMiddleware::class, AdminMiddleware::class]);
+
+Router::add("GET", "/transactions", TransactionController::class, "index", [AuthMiddleware::class, AdminMiddleware::class]);
+Router::add("POST", "/transactions", TransactionController::class, "store", [AuthMiddleware::class, AdminMiddleware::class]);
+Router::add("GET", "/transactions/([0-9a-zA-Z]*)", TransactionController::class, "transaction", [AuthMiddleware::class, AdminMiddleware::class]);
+Router::add("POST", "/transactions/delete/([0-9a-zA-Z]*)", TransactionController::class, "delete", [AuthMiddleware::class, AdminMiddleware::class]);
+Router::add("POST", "/transactions/([0-9a-zA-Z]*)", TransactionController::class, "edit", [AuthMiddleware::class, AdminMiddleware::class]);
 
 Router::run();

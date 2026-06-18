@@ -84,6 +84,12 @@
 						<p>Mata Kuliah</p>
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="/transactions" class="nav-link <?= $_SERVER['REQUEST_URI'] == '/transactions' ? 'active' : '' ?>">
+						<i class="nav-icon fas fa-money-bill-wave"></i>
+						<p>Transaksi</p>
+					</a>
+				</li>
 				<?php
 					endif;
 				?>

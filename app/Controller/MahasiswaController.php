@@ -22,19 +22,29 @@ class MahasiswaController {
 
     public function store() {
         $data = [
-            "nim" => $_POST["nim"],
             "nama" => $_POST["nama"],
             "id_jurusan" => $_POST["id_jurusan"],
             "alamat" => $_POST["alamat"],
             "telepon" => $_POST["telepon"]
         ];
 
-        if(empty(trim($data["nim"])) || empty(trim($data["nama"])) || empty(trim($data["alamat"])) || empty(trim($data["telepon"])) || empty(trim($data["id_jurusan"]))) {
+        if(empty(trim($data["nama"])) || empty(trim($data["alamat"])) || empty(trim($data["telepon"])) || empty(trim($data["id_jurusan"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
             $this->sendFormInput($data);
             header("Location: /mahasiswas/create");
             exit(0);
         }
+
+        $model = new MahasiswaModel();
+        $prefix = date('Y') . str_pad($data["id_jurusan"], 2, '0', STR_PAD_LEFT);
+        $lastNimResult = $model->getLastNimByPrefix($prefix);
+        if ($lastNimResult) {
+            $lastSequence = (int) substr($lastNimResult["nim"], -4);
+            $nextSequence = $lastSequence + 1;
+        } else {
+            $nextSequence = 1;
+        }
+        $data["nim"] = $prefix . str_pad($nextSequence, 4, '0', STR_PAD_LEFT);
 
         $model = new MahasiswaModel();
         try {

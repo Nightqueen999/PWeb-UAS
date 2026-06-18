@@ -92,4 +92,11 @@ class MahasiswaModel {
 
         return $this->database->resultSet();
     }
+
+    public function getLastNimByPrefix($prefix) {
+        $query = "SELECT nim FROM {$this->table} WHERE nim LIKE :prefix ORDER BY nim DESC LIMIT 1";
+        $this->database->query($query);
+        $this->database->bind("prefix", $prefix . "%");
+        return $this->database->single();
+    }
 }

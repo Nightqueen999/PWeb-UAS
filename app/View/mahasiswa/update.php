@@ -64,7 +64,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nim">NIM</label>
-                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? $model["mahasiswa"]["nim"] ?? "" ?>" placeholder="Masukkan NIM">
+                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? $model["mahasiswa"]["nim"] ?? "" ?>" placeholder="Masukkan NIM" readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="nama">Nama</label>

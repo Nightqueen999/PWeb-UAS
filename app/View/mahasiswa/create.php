@@ -62,10 +62,7 @@
                             <!-- form start -->
                             <form action="/mahasiswas/create" method="post">
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="nim">NIM</label>
-                                        <input type="number" name="nim" class="form-control" id="nim" value="<?= $_SESSION["form-input"]["nim"] ?? "" ?>" placeholder="Masukkan NIM" required>
-                                    </div>
+
                                     <div class="form-group">
                                         <label for="nama">Nama</label>
                                         <input type="text" name="nama" class="form-control" id="nama" value="<?= $_SESSION["form-input"]["nama"] ?? "" ?>" placeholder="Masukkan Nama" required>
