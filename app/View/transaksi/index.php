@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2-container .select2-selection--single {
+            height: 2em;
+        }
+        .select2-container--default .select2-selection--single {
+            padding: 0;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            padding-top: 4px;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 

@@ -75,11 +75,12 @@ class UserModel {
             }
         }
         
-        $query = "UPDATE {$this->table} SET username = :username, email = :email WHERE id = :id";
+        $query = "UPDATE {$this->table} SET username = :username, email = :email, gambar = :gambar WHERE id = :id";
         $this->database->query($query);
 
         $this->database->bind("username", $data["username"]);
         $this->database->bind("email", $data["email"]);
+        $this->database->bind("gambar", $data["gambar"]);
         $this->database->bind("id", $data["id"]);
 
         $this->database->execute();

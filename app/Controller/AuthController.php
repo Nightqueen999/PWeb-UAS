@@ -125,20 +125,53 @@ class AuthController {
     }
 
     public function edit(int $id) {
+        $model = new UserModel();
+        $currentUser = $model->getUserById($id);
+
         $data = [
             "id" => $id,
             "username" => $_POST["username"],
-            "email" => $_POST["email"]
+            "email" => $_POST["email"],
+            "gambar" => $currentUser["gambar"] ?? null
         ];
 
         if(empty(trim($data["username"])) || empty(trim($data["email"]))) {
             FlashMessage::setFlashMessage("error", "Form tidak boleh kosong");
             $this->sendFormInput($data);
-            header("Location: /users");
+            header("Location: /profile");
             exit;
         }
 
-        $model = new UserModel();
+        // Handle file upload
+        if(isset($_FILES["gambar"]) && $_FILES["gambar"]["error"] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . "/../../public/img/profiles/";
+            if(!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            
+            $fileExtension = pathinfo($_FILES["gambar"]["name"], PATHINFO_EXTENSION);
+            $fileName = "profile_" . $id . "_" . time() . "." . $fileExtension;
+            $uploadPath = $uploadDir . $fileName;
+
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if(in_array(strtolower($fileExtension), $allowedExtensions)) {
+                if(move_uploaded_file($_FILES["gambar"]["tmp_name"], $uploadPath)) {
+                    if(!empty($currentUser["gambar"]) && file_exists($uploadDir . $currentUser["gambar"])) {
+                        unlink($uploadDir . $currentUser["gambar"]);
+                    }
+                    $data["gambar"] = $fileName;
+                } else {
+                    FlashMessage::setFlashMessage("error", "Gagal mengunggah gambar");
+                    header("Location: /users");
+                    exit(0);
+                }
+            } else {
+                FlashMessage::setFlashMessage("error", "Format gambar tidak didukung (hanya JPG, PNG, GIF)");
+                header("Location: /users");
+                exit(0);
+            }
+        }
+
         try {
             // Supaya tidak bisa ubah user lain
             $jwt = $_COOKIE["X-KRISNALTE-SESSION"];
@@ -148,7 +181,7 @@ class AuthController {
             }
             
             $model->updateUser($data);
-            FlashMessage::setFlashMessage("success", "User berhasil diubah");
+            FlashMessage::setFlashMessage("success", "Profil berhasil diubah");
             header("Location: /users");
             exit(0);
         } catch (Exception $exception) {

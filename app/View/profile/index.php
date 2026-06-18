@@ -46,7 +46,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="<?php __DIR__ ?>/AdminLTE/dist/img/user4-128x128.jpg" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="<?= empty($result["gambar"]) ? '/AdminLTE/dist/img/user4-128x128.jpg' : '/img/profiles/' . $result['gambar'] ?>" alt="User profile picture">
                                 </div>
 
                                 <?php
@@ -58,7 +58,7 @@
                                         ];
                                     }
                                 ?>
-                                <form action="/users/update/<?= $result["id"] ?>" method="post" id="form-profile">
+                                <form action="/users/update/<?= $result["id"] ?>" method="post" id="form-profile" enctype="multipart/form-data">
                                     <ul class="list-group list-group-unbordered my-3">
                                         <li class="list-group-item">
                                             <div class="row d-flex align-items-center">
@@ -70,6 +70,12 @@
                                             <div class="row d-flex align-items-center">
                                                 <div class="col-3">Email</div>
                                                 <div class="col-9"><input type="email" name="email" id="email" value="<?= $_SESSION["form-input"]["email"] ?? $result["email"] ?>" class="form-control"></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-3">Gambar Profil</div>
+                                                <div class="col-9"><input type="file" name="gambar" id="gambar" class="form-control" accept="image/*"></div>
                                             </div>
                                         </li>
                                     </ul>

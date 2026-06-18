@@ -27,17 +27,21 @@
 		<div class="sidebar">
 		<!-- Sidebar user panel (optional) -->
 		<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+			<?php
+				if(isset($_COOKIE["X-KRISNALTE-SESSION"])) {
+					$jwt = $_COOKIE["X-KRISNALTE-SESSION"];
+					$payload = Firebase\JWT\JWT::decode($jwt, new Firebase\JWT\Key(Krispachi\KrisnaLTE\Controller\AuthController::$SECRET_KEY, "HS256"));
+					$query = new Krispachi\KrisnaLTE\Model\UserModel;
+					$result = $query->getUserById($payload->user_id);
+					$role = $query->getRoleUserById($payload->user_id)["role"];
+				}
+			?>
 			<div class="image">
-				<img src="<?php __DIR__ ?>/img/krisna.jpg" class="img-circle elevation-2" alt="User Image">
+				<img src="<?= !empty($result["gambar"]) ? '/img/profiles/' . $result["gambar"] : '/AdminLTE/dist/img/user4-128x128.jpg' ?>" class="img-circle elevation-2" alt="User Image">
 			</div>
 			<div class="info">
 				<?php
-					if(isset($_COOKIE["X-KRISNALTE-SESSION"])) {
-						$jwt = $_COOKIE["X-KRISNALTE-SESSION"];
-						$payload = Firebase\JWT\JWT::decode($jwt, new Firebase\JWT\Key(Krispachi\KrisnaLTE\Controller\AuthController::$SECRET_KEY, "HS256"));
-						$query = new Krispachi\KrisnaLTE\Model\UserModel;
-						$result = $query->getUserById($payload->user_id);
-						$role = $query->getRoleUserById($payload->user_id)["role"];
+					if(isset($result)) {
 						echo "<a class='d-block'>" . $result["username"] ?? "N/A" . "</a>";
 					} else {
 						echo "<a class='d-block'>Krisna Ariwidnyana</a>";
