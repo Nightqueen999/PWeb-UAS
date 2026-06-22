@@ -36,12 +36,13 @@ class UserModel {
             throw new Exception("Username sudah tersedia");
         }
         
-        $query = "INSERT INTO {$this->table} (username, email, password) VALUES (:username, :email, :password)";
+        $query = "INSERT INTO {$this->table} (username, email, password, role) VALUES (:username, :email, :password , :role)";
         $this->database->query($query);
 
         $this->database->bind("username", $data["username"]);
         $this->database->bind("email", $data["email"]);
         $this->database->bind("password", password_hash($data["password"], PASSWORD_DEFAULT));
+        $this->database->bind("role", "petugas_pendaftaran");
 
         $this->database->execute();
     }
